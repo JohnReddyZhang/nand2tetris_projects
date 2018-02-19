@@ -1,0 +1,12 @@
+
+
+/** Initializes a new Circle Trace game and starts running it. */
+class Main {
+    function void main() {
+        var CircleTrace game;
+        let game = CircleTrace.new();
+        do game.run();
+        do game.dispose();
+        return;
+    }
+}

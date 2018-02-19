@@ -1,0 +1,74 @@
+// Based on the Square Dance Game
+/**
+ * Implements the Circle with Trace Game.
+ * This game allows you to do similar things as the Square Dance Game
+ * but leaves a trace (as a dot) every time you move the filled circle.
+ * When the game starts, a circle of radius 30 pixels is shown at the
+ * center of the screen. The user controls the cirle as follows.
+ * The 'w', 's', 'a', 'd' keys are used to move the circle up, down, left, and right.
+ * The 'z' and 'x' keys are used, respectively, to decrement and increment
+ * the circle's size. The 'q' key is used to quit the game.
+ */
+
+class CircleTrace {
+   field Circle circle; // the circle of this game
+   field int direction; // the cirlce's current direction: 
+                        // 0=none, 1=up, 2=down, 3=left, 4=right
+
+   /** Constructs a new Circle Game. */
+   constructor CircleTrace new() {
+      //Creates a radius 30 circle in the center
+      let circle = Circle.new(255, 127, 30);
+      let direction = 0;  // initial state is no movement
+      return this;
+   }
+
+   /** Disposes this game. */
+   method void dispose() {
+      do circle.dispose();
+      do Memory.deAlloc(this);
+      return;
+   }
+
+   /** Moves the circle in the current direction. */
+   method void moveCircle() {
+      if (direction = 1) { do circle.moveUp(); }
+      if (direction = 2) { do circle.moveDown(); }
+      if (direction = 3) { do circle.moveLeft(); }
+      if (direction = 4) { do circle.moveRight(); }
+      do Sys.wait(10);  // delays the next movement
+      return;
+   }
+
+   /** Runs the game: handles the user's inputs and moves the circle accordingly */
+   method void run() {
+      var char key;  // the key currently pressed by the user
+      var boolean exit;
+      let exit = false;
+      
+      while (~exit) {
+         // waits for a key to be pressed
+         while (key = 0) {
+            let key = Keyboard.keyPressed();
+            //do moveCircle();
+         }
+         if (key = 81)  { let exit = true; }     // q key
+         if (key = 90)  { do circle.decSize(); } // z key
+         if (key = 88)  { do circle.incSize(); } // x key
+         if (key = 87) { let direction = 1; }   // w key
+         if (key = 83) { let direction = 2; }   // s key
+         if (key = 65) { let direction = 3; }   // a key
+         if (key = 68) { let direction = 4; }   // d key
+
+         // waits for the key to be released
+         while (~(key = 0)) {
+            let key = Keyboard.keyPressed();
+            do moveCircle();
+         }
+     } // while
+     return;
+   }
+}
+
+
+

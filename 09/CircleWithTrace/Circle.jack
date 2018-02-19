@@ -1,0 +1,126 @@
+//This program is based on the Square Game,
+//With changes on its function
+
+/** Implements a graphical circle. */
+class Circle {
+
+   field int x, y; // screen location of the circle's center
+   field int r; // radius of this circle, in pixels
+
+   /** Constructs a new circle with a given location and size. */
+   constructor Circle new(int Ax, int Ay, int Aradius) {
+      let x = Ax;
+      let y = Ay;
+      let r = Aradius;
+      do draw();
+      return this;
+   }
+
+   /** Disposes this circle. */
+   method void dispose() {
+      do Memory.deAlloc(this);
+      return;
+   }
+
+   /** Draws the ciecle on the screen. */
+   method void draw() {
+      do Screen.setColor(true);
+      do Screen.drawCircle(x, y, r);
+      return;
+   }
+
+   /** Erases the circle from the screen. */
+   method void erase() {
+      do Screen.setColor(false);
+      do Screen.drawCircle(x, y, r);
+      return;
+   }
+
+   /** Leave Trace of the circle **/
+   method void leaveTrace(int x, int y) {
+      do Screen.setColor(true);
+      do Screen.drawCircle(x, y, 2); //Leave a radius=2 dot as trace
+      return;
+   }
+
+    /** Increments the circle radius by 1 pixel. */
+   method void incSize() {
+      if ((y > r) & ((y + r)<254) & (x > r) & ((x + r) < 510)) {
+         do erase();
+         let r = r + 1;
+         do draw();
+      }
+      return;
+   }
+
+   /** Decrements the circle radius by 1 pixel. */
+   method void decSize() {
+      if (r > 1) {
+         do erase();
+         let r = r - 1;
+         do draw();
+      }
+      return;
+   }
+
+   /** Moves the circle up by 1 pixel. */
+   method void moveUp() {
+      if ((y - r) > 1) {
+         do Screen.setColor(false);
+         do Screen.drawCircle(x, y, r);
+         do Screen.setColor(true);
+         if (((y + r) + 2) < 254){
+            do leaveTrace(x, (y + r) + 1);
+         }
+         let y = y - 1;
+         do Screen.drawCircle(x, y, r); 
+      }
+      return;
+   }
+
+   /** Moves the circle down by 1 pixel. */
+   method void moveDown() {
+      if ((y + r) < 254) {
+         do Screen.setColor(false);
+         do Screen.drawCircle(x, y, r);
+         do Screen.setColor(true);
+         if (y > (r + 2)) {            
+            do leaveTrace(x, (y - r) - 1);
+         }
+         let y = y + 1;
+         do Screen.drawCircle(x, y, r);
+      }
+      return;
+   }
+
+   /** Moves the cirlce left by 1 pixels. */
+   method void moveLeft() {
+      if ((x - r) > 1) {
+         do Screen.setColor(false);
+         do Screen.drawCircle(x, y ,r);
+         do Screen.setColor(true);
+         if (((x + r) + 2) < 510) {
+            do leaveTrace((x + r) + 1, y);
+         }
+         let x = x - 1;
+         do Screen.drawCircle(x, y, r);
+      }
+      return;
+   }
+
+   /** Moves the circle right by 1 pixels. */
+   method void moveRight() {
+      if ((x + r) < 510) {
+         do Screen.setColor(false);
+         do Screen.drawCircle(x, y, r);
+         do Screen.setColor(true);
+         if (x > (r + 2)) {
+            do leaveTrace((x - r) - 1, y);
+         }
+         let x = x + 1;
+         do Screen.setColor(true);
+         do Screen.drawCircle(x, y , r);
+      }
+      return;
+   }
+}
